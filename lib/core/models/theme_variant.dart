@@ -1,24 +1,24 @@
 class ThemeVariant {
-  _Variant variant;
+  Variant variant;
 
-  ThemeVariant({this.variant = _Variant.light});
+  ThemeVariant({this.variant = Variant.light});
 
   factory ThemeVariant.fromIndex(int index) {
     switch (index) {
       case 1:
-        return ThemeVariant(variant: _Variant.dark);
+        return ThemeVariant(variant: Variant.dark);
       case 2:
-        return ThemeVariant(variant: _Variant.light);
+        return ThemeVariant(variant: Variant.light);
       default:
-        return ThemeVariant(variant: _Variant.light);
+        return ThemeVariant(variant: Variant.light);
     }
   }
 
   int get index {
     switch (variant) {
-      case _Variant.dark:
+      case Variant.dark:
         return 1;
-      case _Variant.light:
+      case Variant.light:
         return 2;
       default:
         return 1;
@@ -26,4 +26,4 @@ class ThemeVariant {
   }
 }
 
-enum _Variant { dark, light }
+enum Variant { dark, light }
