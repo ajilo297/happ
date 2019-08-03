@@ -48,27 +48,30 @@ class DashboardView extends StatelessWidget {
   }
 
   Widget getNameTimeView(BuildContext context, DashboardViewModel viewModel) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
                   'Good ' '${viewModel.timeOfDay}!',
                   style: Theme.of(context).textTheme.title,
                 ),
-                Text(
-                  Provider.of<UserModel>(context)?.name ?? 'User',
-                  style: Theme.of(context).textTheme.subhead,
-                ),
-              ],
-            ),
+              ),
+              FlatButton(
+                child: Text(Provider.of<UserModel>(context)?.name ?? 'User'),
+                onPressed: () => viewModel.editName(context),
+              ),
+            ],
           ),
-          Align(
-            alignment: Alignment.topLeft,
+        ),
+        Align(
+          alignment: Alignment.topLeft,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,8 +89,8 @@ class DashboardView extends StatelessWidget {
               ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -145,9 +148,12 @@ class DashboardView extends StatelessWidget {
         itemCount: viewModel.runningAppliances.length,
         itemBuilder: (context, index) {
           ApplianceModel model = viewModel.runningAppliances.elementAt(index);
-          return ApplianceCard(model, onToggle: () {
-            viewModel.toggleAppliance(model);
-          },);
+          return ApplianceCard(
+            model,
+            onToggle: () {
+              viewModel.toggleAppliance(model);
+            },
+          );
         },
       ),
     );

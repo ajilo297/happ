@@ -8,12 +8,12 @@ class RoomModel {
   });
 
   factory RoomModel.fromMap(Map<String, dynamic> json) => RoomModel(
-        id: json["id"] == null ? null : json["id"],
-        name: json["name"] == null ? null : json["name"],
+        id: json["ID"] == null ? null : json["ID"],
+        name: json["NAME"] == null ? null : json["NAME"],
       );
 
   Map<String, dynamic> toMap() => {
-        "id": id == null ? null : id,
-        "name": name == null ? null : name,
+        "ID": id == null ? null : id,
+        "NAME": name == null ? null : name,
       };
 }

@@ -182,4 +182,17 @@ class DatabaseService extends BaseService {
       where: '$_ID_KEY=${model.id}',
     );
   }
+
+  Future<List<RoomModel>> getRooms() async {
+    if (_database == null) {
+      log.e('getRunningAppliances: Database not open');
+      return [];
+    }
+    List<Map<String, dynamic>> result = await _database.query(
+      _ROOM_TABLE,
+    );
+    log.i('getRooms: $result');
+
+    return result.map((json) => RoomModel.fromMap(json)).toList();
+  }
 }

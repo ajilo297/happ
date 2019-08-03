@@ -29,7 +29,7 @@ class RoundedCard extends StatelessWidget {
             offset: Offset(0, 3),
             blurRadius: 5,
             spreadRadius: 3,
-          )
+          ),
         ],
       ),
       margin: margin,

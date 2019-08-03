@@ -31,7 +31,6 @@ class OnboardingView extends StatelessWidget {
                 child: TextFormField(
                   textCapitalization: TextCapitalization.words,
                   keyboardType: TextInputType.text,
-                  autofocus: true,
                   validator: viewModel.validateName,
                   onSaved: (name) async {
                     await viewModel.saveName(name);
@@ -50,7 +49,9 @@ class OnboardingView extends StatelessWidget {
                 alignment: Alignment.centerRight,
                 child: FloatingActionButton.extended(
                   label: Text('Save'),
+                  backgroundColor: Theme.of(context).accentColor,
                   onPressed: viewModel.busy ? null : viewModel.save,
+                  foregroundColor: Colors.white,
                   icon: viewModel.busy
                       ? CircularProgressIndicator()
                       : Icon(Icons.done),

@@ -6,8 +6,8 @@ import 'package:happ/core/models/theme_variant.dart';
 import 'package:happ/core/services/database_service.dart';
 import 'package:happ/core/services/preferences_service.dart';
 import 'package:happ/views/devices/devices_view.dart';
+import 'package:happ/views/onboarding/onboarding_view.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class DashboardViewModel extends BaseViewModel {
   bool _value = false;
@@ -111,5 +111,15 @@ class DashboardViewModel extends BaseViewModel {
     _databaseService.toggleAppliance(model);
     busy = false;
     await fetchListOfRunningDevices();
+  }
+
+  void editName(BuildContext context) {
+    log.i('editName');
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => OnboardingView(),
+      ),
+    );
   }
 }
