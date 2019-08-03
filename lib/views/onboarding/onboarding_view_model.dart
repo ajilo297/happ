@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happ/core/base/base_view_model.dart';
+import 'package:happ/core/models/user_model.dart';
 import 'package:happ/views/dashboard/dashboard_view.dart';
 import 'package:meta/meta.dart';
 import 'package:happ/core/services/preferences_service.dart';
@@ -29,10 +30,12 @@ class OnboardingViewModel extends BaseViewModel {
     formKey.currentState.save();
   }
 
-  Future saveName(String name) async{
+  Future saveName(String name) async {
     log.i('saveName: $name');
     busy = true;
-    await _preferenceService.setSignedInUser(name);
+    await _preferenceService.setSignedInUser(
+      UserModel(name: name),
+    );
     busy = false;
   }
 

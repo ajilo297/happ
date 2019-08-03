@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:happ/core/base/base_view_model.dart';
 import 'package:happ/core/models/theme_variant.dart';
+import 'package:happ/core/models/user_model.dart';
 import 'package:happ/core/services/preferences_service.dart';
 import 'package:happ/views/dashboard/dashboard_view.dart';
 import 'package:happ/views/onboarding/onboarding_view.dart';
@@ -58,10 +59,10 @@ class SplashViewModel extends BaseViewModel {
 
   Future<bool> _isUserSignedIn() async {
     log.i('isUserSignedIn');
-    busy=  true;
-    String user = await _preferenceService.getSignedInUser();
+    busy = true;
+    UserModel user = await _preferenceService.getSignedInUser();
     busy = false;
-    if (user == null || user.isEmpty) return false;
+    if (user == null || user.name == null || user.name.isEmpty) return false;
     return true;
   }
 }

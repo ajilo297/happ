@@ -1,7 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:happ/core/base/base_view_model.dart';
 import 'package:happ/core/models/theme_variant.dart';
 import 'package:happ/core/services/preferences_service.dart';
+import 'package:happ/views/devices/devices_view.dart';
 import 'package:intl/intl.dart';
 
 class DashboardViewModel extends BaseViewModel {
@@ -71,5 +73,14 @@ class DashboardViewModel extends BaseViewModel {
 
   String get amPm {
     return DateTime.now().hour >= 12 ? 'PM' : 'AM';
+  }
+
+  void seeAllDevices(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DevicesView(),
+      ),
+    );
   }
 }

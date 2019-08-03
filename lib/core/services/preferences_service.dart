@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:happ/core/base/base_service.dart';
 import 'package:happ/core/models/theme_variant.dart';
+import 'package:happ/core/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceService extends BaseService {
@@ -12,10 +13,10 @@ class PreferenceService extends BaseService {
   StreamController<ThemeVariant> _themeDataStream =
       StreamController.broadcast();
   // ignore: close_sinks
-  StreamController<String> _userStream = StreamController.broadcast();
+  StreamController<UserModel> _userStream = StreamController.broadcast();
 
   Stream<ThemeVariant> get selectedThemeStream => _themeDataStream.stream;
-  Stream<String> get userStream => _userStream.stream;
+  Stream<UserModel> get userStream => _userStream.stream;
 
   Future<ThemeVariant> get selectedTheme async {
     log.i('selectedTheme');
@@ -42,18 +43,21 @@ class PreferenceService extends BaseService {
     _themeDataStream.add(variant);
   }
 
-  Future setSignedInUser(String user) async {
-    log.i('setSignedInUser: user: $user');
+  Future setSignedInUser(UserModel user) async {
+    log.i('setSignedInUser: user: ${user.name}');
 
     SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString(_USER_KEY, user);
+    preferences.setString(_USER_KEY, user.name);
+    _userStream.add(user);
   }
 
-  Future<String> getSignedInUser() async {
+  Future<UserModel> getSignedInUser() async {
     log.i('getSignedInUser');
     SharedPreferences preferences = await SharedPreferences.getInstance();
     try {
-      String user = preferences.getString(_USER_KEY);
+      String name = preferences.getString(_USER_KEY);
+      if (name == null || name.isEmpty) return null;
+      UserModel user = UserModel(name: name); 
       _userStream.add(user);
       return user;
     } catch (error) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:happ/core/base/base_view.dart';
+import 'package:happ/core/models/user_model.dart';
 import 'package:happ/core/services/preferences_service.dart';
 import 'package:happ/views/dashboard/dashboard_view_model.dart';
 import 'package:happ/widgets/rounded_card.dart';
@@ -28,8 +29,10 @@ class DashboardView extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               getNameTimeView(context, viewModel),
+              getRunningAppliances(context, viewModel),
               getThemeCard(context, viewModel),
             ],
           ),
@@ -53,7 +56,7 @@ class DashboardView extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  Provider.of<String>(context),
+                  Provider.of<UserModel>(context)?.name ?? 'User',
                   style: Theme.of(context).textTheme.subhead,
                 ),
               ],
@@ -77,6 +80,33 @@ class DashboardView extends StatelessWidget {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget getRunningAppliances(
+      BuildContext context, DashboardViewModel viewModel) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Expanded(
+                child: Text(
+                  'Running Appliances',
+                  style: Theme.of(context).textTheme.subtitle,
+                  textAlign: TextAlign.left,
+                ),
+              ),
+              FlatButton(
+                child: Text('See All'),
+                onPressed: () => viewModel.seeAllDevices(context),
+              ),
+            ],
           ),
         ],
       ),
