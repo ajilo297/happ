@@ -25,7 +25,7 @@ class RoundedCard extends StatelessWidget {
         ),
         shadows: [
           BoxShadow(
-            color: Colors.black.withAlpha(10),
+            color: Color(0xff111144).withAlpha(10),
             offset: Offset(0, 3),
             blurRadius: 5,
             spreadRadius: 3,

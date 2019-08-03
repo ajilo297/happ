@@ -122,6 +122,10 @@ class DatabaseService extends BaseService {
     Database database,
   }) async {
     log.i('createAppliance: ${applianceModel.toMap()}');
+    if (_database == null && database == null) {
+      log.e('getRunningAppliances: Database not open');
+      return;
+    }
     Database db = database ?? _database;
     int newId = await db.insert(_APPLICANCE_TABLE, {
       _ROOM_ID_KEY: applianceModel.roomId,
@@ -138,11 +142,44 @@ class DatabaseService extends BaseService {
     Database database,
   }) async {
     log.i('createRoom: ${roomModel.toMap()}');
+    if (_database == null && database == null) {
+      log.e('getRunningAppliances: Database not open');
+      return;
+    }
     Database db = database ?? _database;
     int newId = await db.insert(
       _ROOM_TABLE,
       {_NAME_KEY: roomModel.name},
     );
     log.i('createRoom: created at $newId');
+  }
+
+  Future<List<ApplianceModel>> getRunningAppliances() async {
+    if (_database == null) {
+      log.e('getRunningAppliances: Database not open');
+      return [];
+    }
+    List<Map<String, dynamic>> result = await _database.query(
+      _APPLICANCE_TABLE,
+    );
+    log.i('getRunningAppliances: $result');
+
+    return result.map((map) => ApplianceModel.fromMap(map)).toList();
+  }
+
+  Future toggleAppliance(ApplianceModel model) async {
+    if (_database == null) {
+      log.e('getRunningAppliances: Database not open');
+      return null;
+    }
+
+    await _database.update(
+      _APPLICANCE_TABLE,
+      {
+        _IS_ON_KEY: model.isOn ? 0 : 1,
+        _UPDATED_AT_KEY: DateTime.now().millisecondsSinceEpoch,
+      },
+      where: '$_ID_KEY=${model.id}',
+    );
   }
 }

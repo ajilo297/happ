@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:happ/core/base/base_view_model.dart';
+import 'package:happ/core/models/appliance_model.dart';
 import 'package:happ/core/models/theme_variant.dart';
+import 'package:happ/core/services/database_service.dart';
 import 'package:happ/core/services/preferences_service.dart';
 import 'package:happ/views/devices/devices_view.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class DashboardViewModel extends BaseViewModel {
   bool _value = false;
   PreferenceService _preferenceService;
+  DatabaseService _databaseService;
+
+  List<ApplianceModel> _runningAppliances = [];
 
   DashboardViewModel({
     @required PreferenceService preferenceService,
-  }) : this._preferenceService = preferenceService {
+    @required DatabaseService databaseService,
+  })  : this._preferenceService = preferenceService,
+        this._databaseService = databaseService {
     _preferenceService.selectedTheme.then((variant) {
       log.i(
         'constructor: '
@@ -43,6 +51,12 @@ class DashboardViewModel extends BaseViewModel {
     _preferenceService.setTheme(
       value ? ThemeVariant.fromIndex(1) : ThemeVariant.fromIndex(2),
     );
+    notifyListeners();
+  }
+
+  List<ApplianceModel> get runningAppliances => this._runningAppliances;
+  set runningAppliances(List<ApplianceModel> runningAppliances) {
+    this._runningAppliances = runningAppliances;
     notifyListeners();
   }
 
@@ -82,5 +96,20 @@ class DashboardViewModel extends BaseViewModel {
         builder: (context) => DevicesView(),
       ),
     );
+  }
+
+  Future fetchListOfRunningDevices() async {
+    log.i('fetchListOfRunningDevices');
+    busy = true;
+    this.runningAppliances = await _databaseService.getRunningAppliances();
+    busy = false;
+  }
+
+  Future toggleAppliance(ApplianceModel model) async {
+    log.i('updateTable: ${model.toMap()}');
+    busy = true;
+    _databaseService.toggleAppliance(model);
+    busy = false;
+    await fetchListOfRunningDevices();
   }
 }
