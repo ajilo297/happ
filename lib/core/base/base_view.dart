@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:happ/core/base/logger.dart';
+import 'package:happ/core/models/theme_variant.dart';
 import 'package:provider/provider.dart';
 
 class BaseView<T extends ChangeNotifier> extends StatefulWidget {
@@ -31,11 +32,23 @@ class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>> {
   @override
   Widget build(BuildContext context) {
     getLogger(this.runtimeType.toString()).i('build');
-    return ChangeNotifierProvider<T>(
-      builder: (context) => model,
-      child: Consumer<T>(
-        builder: widget.builder,
-        child: widget.child,
+    return Theme(
+      data: () {
+        switch (Provider.of<ThemeVariant>(context).variant) {
+          case Variant.dark:
+            return ThemeData.dark();
+          case Variant.light:
+            return ThemeData.light();
+          default:
+            return ThemeData.dark();
+        }
+      }(),
+      child: ChangeNotifierProvider<T>(
+        builder: (context) => model,
+        child: Consumer<T>(
+          builder: widget.builder,
+          child: widget.child,
+        ),
       ),
     );
   }

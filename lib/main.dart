@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:happ/core/providers.dart';
-import 'package:happ/views/core/core_view.dart';
+import 'package:happ/views/splash/splash_view.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -13,7 +13,7 @@ class MainApplication extends StatelessWidget {
     return MultiProvider(
       providers: providers,
       child: MaterialApp(
-        home: CoreView(),
+        home: SplashView(),
       ),
     );
   }
