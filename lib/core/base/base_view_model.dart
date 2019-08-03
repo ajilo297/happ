@@ -18,6 +18,8 @@ class BaseViewModel extends ChangeNotifier {
     return this._busy;
   }
 
+  bool get isDisposed => this._isDisposed;
+
   set busy(bool busy) {
     this._busy = busy;
     notifyListeners();

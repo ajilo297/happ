@@ -16,5 +16,10 @@ List<SingleChildCloneableWidget> _consumableProviders = [
     builder: (context) => Provider.of<PreferenceService>(context, listen: false)
         .selectedThemeStream,
     initialData: ThemeVariant.fromIndex(1),
-  )
+  ),
+  StreamProvider<String>(
+    builder: (context) => Provider.of<PreferenceService>(context, listen: false)
+        .userStream,
+    initialData: 'User',
+  ),
 ];

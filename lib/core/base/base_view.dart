@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:happ/core/base/logger.dart';
 import 'package:happ/core/models/theme_variant.dart';
+import 'package:happ/theme/happ_theme.dart';
 import 'package:provider/provider.dart';
 
 class BaseView<T extends ChangeNotifier> extends StatefulWidget {
@@ -36,11 +37,11 @@ class _BaseViewState<T extends ChangeNotifier> extends State<BaseView<T>> {
       data: () {
         switch (Provider.of<ThemeVariant>(context).variant) {
           case Variant.dark:
-            return ThemeData.dark();
+            return HappTheme().darkTheme;
           case Variant.light:
-            return ThemeData.light();
+            return HappTheme().lightTheme;
           default:
-            return ThemeData.dark();
+            return HappTheme().darkTheme;
         }
       }(),
       child: ChangeNotifierProvider<T>(

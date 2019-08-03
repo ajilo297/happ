@@ -13,6 +13,7 @@ dependencies:
   sqflite: ^1.1.6+3
   logger: ^0.7.0+2
   shared_preferences: ^0.5.3+4
+  intl: ^0.15.8
 
 dev_dependencies:
   flutter_test:
@@ -22,3 +23,21 @@ flutter:
   uses-material-design: true
   assets:
     - assets/splash_screen.png
+
+  fonts:
+      - family: NunitoSans
+        fonts:
+          - asset: assets/fonts/NunitoSans-Black.ttf
+          - asset: assets/fonts/NunitoSans-BlackItalic.ttf
+          - asset: assets/fonts/NunitoSans-Bold.ttf
+          - asset: assets/fonts/NunitoSans-BoldItalic.ttf
+          - asset: assets/fonts/NunitoSans-ExtraBold.ttf
+          - asset: assets/fonts/NunitoSans-ExtraBoldItalic.ttf
+          - asset: assets/fonts/NunitoSans-ExtraLight.ttf
+          - asset: assets/fonts/NunitoSans-ExtraLight.ttf
+          - asset: assets/fonts/NunitoSans-Italic.ttf
+          - asset: assets/fonts/NunitoSans-Light.ttf
+          - asset: assets/fonts/NunitoSans-LightItalic.ttf
+          - asset: assets/fonts/NunitoSans-Regular.ttf
+          - asset: assets/fonts/NunitoSans-SemiBold.ttf
+          - asset: assets/fonts/NunitoSans-SemiBoldItalic.ttf

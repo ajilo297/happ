@@ -16,7 +16,7 @@ class SplashView extends StatelessWidget {
       builder: (context, viewModel, _) => getView(context, viewModel),
       onModelReady: (viewModel) async {
         await viewModel.loadAfterDelay();
-        viewModel.navigateToDashboardView(context);
+        viewModel.navigateToNextScreen(context);
       },
     );
   }
