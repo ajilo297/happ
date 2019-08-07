@@ -92,10 +92,14 @@ class DashboardViewModel extends BaseViewModel {
   void seeAllDevices(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(
+      MaterialPageRoute<bool>(
         builder: (context) => DevicesView(),
       ),
-    );
+    ).then((updated) {
+      if (updated) {
+        fetchListOfRunningDevices();
+      }
+    });
   }
 
   Future fetchListOfRunningDevices() async {

@@ -1,13 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:happ/core/base/base_view_model.dart';
 import 'package:happ/core/models/appliance_model.dart';
 import 'package:happ/core/models/room_model.dart';
 import 'package:happ/core/services/database_service.dart';
+import 'package:happ/views/add_devices/add_devices_view.dart';
 
 class DevicesViewModel extends BaseViewModel {
   List<ApplianceModel> _runningAppliances = [];
   List<RoomModel> _roomList = [];
   DatabaseService _databaseService;
+
+  bool _updated = false;
 
   DevicesViewModel({
     @required DatabaseService databaseService,
@@ -47,13 +51,26 @@ class DevicesViewModel extends BaseViewModel {
     _databaseService.toggleAppliance(model);
     busy = false;
     await fetchListOfRunningDevices();
+    _updated = true;
   }
 
   void addDevice(BuildContext context) {
     log.i('addDevice');
+    Navigator.push(
+      context,
+      MaterialPageRoute<bool>(
+        builder: (context) => AddDevicesView(),
+      ),
+    ).then((value) {
+      if (value) {
+        fetchListOfRunningDevices();
+        fetchListOfRooms();
+        _updated = true;
+      }
+    });
   }
 
   void goBack(BuildContext context) {
-    Navigator.pop(context);
+    Navigator.pop(context, _updated);
   }
 }
